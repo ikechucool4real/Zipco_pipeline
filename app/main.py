@@ -128,7 +128,16 @@ def transform_data(dir):
         .str.strip('_')
     )
 
+    #Change data types
+    clean_df['postal_code'] = clean_df['postal_code'].astype(str)
+    clean_df["listing_agent_phone"] = clean_df["listing_agent_phone"].fillna("").astype(str)
+    clean_df["listing_office_phone"] = clean_df["listing_office_phone"].fillna("").astype(str)
+
+    date_cols = ["listed_date", "removed_date", "created_date", "last_seen_date"]
+    for col in date_cols:
+        clean_df[col] = pd.to_datetime(clean_df[col], errors="coerce")  
     logging.info('Data cleaned')
+    
     return clean_df
 
 #load clean data to datastore

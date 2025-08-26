@@ -43,6 +43,7 @@ create table if not exists fact_listings (
     latitude numeric,
     longitude numeric,
     listed_date_fk int references dim_date(date_sk),
+    price int,
     ingested_at timestamptz default now()
 );
 

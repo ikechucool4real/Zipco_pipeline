@@ -54,7 +54,7 @@ on conflict(date_sk) do nothing;
 --Build the fact table
 insert into fact_listings(
     listing_id, location_fk, office_fk, property_fk,
-    full_address, latitude, longitude, listed_date_fk
+    full_address, latitude, longitude, listed_date_fk, price
 )
 select 
     l.id,
@@ -64,7 +64,8 @@ select
     l.full_address,
     l.latitude,
     l.longitude,
-    dd.date_sk as listed_date_fk
+    dd.date_sk as listed_date_fk,
+    l.price
 from transformed_listing l
 left join dim_location dloc on dloc.state = l.state 
 and dloc.city = l.city and dloc.postal_code = l.postal_code::varchar(20)
